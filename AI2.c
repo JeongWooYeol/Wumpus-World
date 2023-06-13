@@ -7,7 +7,6 @@
 #define GridSize 6
 #pragma warning(disable: 4996)
 int history[200][2];
-typedef enum { CHEATER, STUPID, RANDOM, HUMAN, INTELLIGENT } Mode;
 
 // There are possible states in the simple reflex environment. 
 typedef enum { UNKNOWN, SAFE, WALLS, BUMPS, GOALS, GOLDS, BREEZES, PITS, STENCHES, WUMPI } WhatWorld;
@@ -261,7 +260,7 @@ void realWorldSet(WorldEnv* RealWorld) {
 
 			//Pits
 			percent = rand() % 100;
-			if (percent < 15 && RealWorld[6 * i + j].golds != true && RealWorld[6 * i + j].safe != true) {
+			if (percent < 15 && RealWorld[6 * i + j].golds != true && RealWorld[6 * i + j].safe != true && RealWorld[6* i + j].wumpi != true) {
 				RealWorld[6 * i + j].pits = true;
 
 				// set breeze
@@ -293,18 +292,67 @@ void percept(agentMode* agent, WorldEnv* RealWorld)
 		case E:
 			agent->Grid[GridSize * (x + 1) + y].wumpi = false;
 			RealWorld[GridSize * (x + 1) + y].wumpi = false;
+
+			agent->Grid[GridSize * (x) + y].stenches = false;
+			RealWorld[GridSize * (x) + y].stenches = false;
+
+			agent->Grid[GridSize * (x + 1) + y + 1].stenches = false;
+			RealWorld[GridSize * (x + 1) + y + 1].stenches = false;
+
+			agent->Grid[GridSize * (x + 2) + y].stenches = false;
+			RealWorld[GridSize * (x + 2) + y].stenches = false;
+
+			agent->Grid[GridSize * (x + 1) + y - 1].stenches = false;
+			RealWorld[GridSize * (x + 1) + y - 1].stenches = false;
+
 			break;
 		case W:
 			agent->Grid[GridSize * (x - 1) + y].wumpi = false;
 			RealWorld[GridSize * (x - 1) + y].wumpi = false;
+
+			agent->Grid[GridSize * (x) + y].stenches = false;
+			RealWorld[GridSize * (x) + y].stenches = false;
+
+			agent->Grid[GridSize * (x - 1) + y + 1].stenches = false;
+			RealWorld[GridSize * (x - 1) + y + 1].stenches = false;
+
+			agent->Grid[GridSize * (x - 2) + y].stenches = false;
+			RealWorld[GridSize * (x - 2) + y].stenches = false;
+
+			agent->Grid[GridSize * (x - 1) + y - 1].stenches = false;
+			RealWorld[GridSize * (x - 1) + y - 1].stenches = false;
 			break;
 		case N:
 			agent->Grid[GridSize * x + y + 1].wumpi = false;
 			RealWorld[GridSize * x + y + 1].wumpi = false;
+
+			agent->Grid[GridSize * (x) + y].stenches = false;
+			RealWorld[GridSize * (x) + y].stenches = false;
+
+			agent->Grid[GridSize * (x) + y + 2].stenches = false;
+			RealWorld[GridSize * (x) + y + 2].stenches = false;
+
+			agent->Grid[GridSize * (x + 1) + y + 1].stenches = false;
+			RealWorld[GridSize * (x + 1) + y + 1].stenches = false;
+
+			agent->Grid[GridSize * (x - 1) + y + 1].stenches = false;
+			RealWorld[GridSize * (x - 1) + y + 1].stenches = false;
 			break;
 		case S:
 			agent->Grid[GridSize * x + y - 1].wumpi = false;
 			RealWorld[GridSize * x + y - 1].wumpi = false;
+
+			agent->Grid[GridSize * (x) + y].stenches = false;
+			RealWorld[GridSize * (x) + y].stenches = false;
+
+			agent->Grid[GridSize * (x) + y - 2].stenches = false;
+			RealWorld[GridSize * (x) + y - 2].stenches = false;
+
+			agent->Grid[GridSize * (x + 1) + y - 1].stenches = false;
+			RealWorld[GridSize * (x + 1) + y - 1].stenches = false;
+
+			agent->Grid[GridSize * (x - 1) + y - 1].stenches = false;
+			RealWorld[GridSize * (x - 1) + y - 1].stenches = false;
 			break;
 		}
 
